@@ -103,7 +103,6 @@
                         placeholder="验证码"
                         minlength="6"
                         maxlength="6"
-                        @change="checkCode"
                     >
                         <template slot="prepend">
                             <img
@@ -289,8 +288,8 @@ export default {
         ready: function() {
             return (
                 this.available &&
-                this.code_validate &&
-                this.code_available &&
+                // this.code_validate &&
+                // this.code_available &&
                 this.pass_validate &&
                 this.accordance
             );
@@ -316,7 +315,7 @@ export default {
             if (result) {
                 checkEmail(this.email).then((res) => {
                     // 可以使用代表不存在
-                    this.email_valid = res.data.data ? false : true;
+                    this.email_valid = res.data.data?.isExist
                 });
             } else {
                 this.email_valid = null;
@@ -374,8 +373,7 @@ export default {
             resetPassword({
                 email: this.email,
                 code: this.code,
-                pwd1: this.pwd1,
-                pwd2: this.pwd2,
+                password: this.pwd1,
             }).then((res) => {
                 this.step = 3;
                 if(!res.data.code){

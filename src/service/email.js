@@ -1,5 +1,5 @@
 import { axios, $ } from "./axios";
-import { __server, __cms } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
 
 function checkEmail(email) {
     return $.get("api/cms/user/account/email/valid", {

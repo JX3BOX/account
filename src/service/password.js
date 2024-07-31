@@ -1,11 +1,11 @@
 import { axios, $ } from "./axios";
-import { __server } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __server, __cms } from "@jx3box/jx3box-common/data/jx3box.json";
 function sendCode(email) {
-    return axios.post(__server + "account/password/reset/start", {
+    return $.post("api/cms/user/account/email/forgot-password", {
         email: email,
     });
 }
-
+// 废弃
 function checkCode(data) {
     return axios.post(__server + "account/password/reset/check", {
         email: data.email,
@@ -14,11 +14,10 @@ function checkCode(data) {
 }
 
 function resetPassword(data) {
-    return axios.post(__server + "account/password/reset/done", {
+    return $.put("api/cms/user/account/email/reset-password", {
         email: data.email,
-        code : data.code,
-        pwd1 : data.pwd1,
-        pwd2 : data.pwd2,
+        code: data.code,
+        password: data.password,
     });
 }
 
