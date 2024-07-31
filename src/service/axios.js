@@ -1,13 +1,19 @@
 import axios from "axios";
+import User from "@jx3box/jx3box-common/js/user";
+import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
+
 const $ = axios.create({
-    withCredentials : true
+    withCredentials : true,
+    headers: {
+        "user-device-fingerprint": User.getDeviceFingerprint(),
+    },
+    baseURL: process.env.NODE_ENV === "production" ? __cms : "/",
 });
 
 import Vue from "vue";
 import { Message, Notification } from "element-ui";
 Vue.prototype.$message = Message;
 Vue.prototype.$notify = Notification;
-const broadcast = new Vue()
 
 function installInterceptors(target){
     target['interceptors']['response'].use(

@@ -55,26 +55,23 @@ export default {
     data: function() {
         return {
             success: null,
-            uid: "",
-            code: "",
             homepage: __Root,
+            token: "",
         };
     },
     computed: {
         ready: function() {
-            return this.uid && this.code;
+            return this.token;
         },
     },
     methods: {
         parse: function() {
             let search = new URLSearchParams(document.location.search);
-            this.uid = search.get("uid");
-            this.code = search.get("code");
+            this.token = search.get("token");
         },
         verify: function() {
             verifyEmail({
-                uid: this.uid,
-                code: this.code,
+                token: this.token,
             })
                 .then((res) => {
                     if (!res.data.code) {

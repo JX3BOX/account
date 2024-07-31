@@ -120,7 +120,7 @@ export default {
             // 检查可用性
             if (result) {
                 checkEmail(this.email).then((res) => {
-                    this.email_available = res.data.data;
+                    this.email_available = !res.data.data.isExist;
                 });
             } else {
                 this.email_available = null;

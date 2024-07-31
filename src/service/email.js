@@ -1,36 +1,32 @@
 import { axios, $ } from "./axios";
-import { __server } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __server, __cms } from "@jx3box/jx3box-common/data/jx3box.json";
 
 function checkEmail(email) {
-    return axios.get(__server + "account/email/check", {
+    return $.get("api/cms/user/account/email/valid", {
         params: {
-            user_email: email,
+            email: email,
         },
     });
 }
 
 function registerByEmail(data) {
-    return axios.post(__server + "account/register/email", {
-        user_email: data.email,
-        user_pass: data.pass,
-    });
+    return $.post("api/cms/user/account/email/register", {
+        email: data.email,
+        password: data.pass,
+    }, { params: { app: 'jx3box' } });
 }
 
 function loginByEmail(data) {
-    return $.post(__server + "account/login/email", {
-        user_email: data.email,
-        user_pass: data.pass,
-        device_id: data.device_id,
-    });
+    return $.post("api/cms/user/account/email/login", {
+        email: data.email,
+        password: data.pass,
+    }, { params: { app: 'jx3box' } });
     // 必须以携带模式请求
 }
 
 function verifyEmail(data) {
-    return axios.get(__server + "account/email/verify", {
-        params : {
-            uid: data.uid,
-            code: data.code,
-        }
+    return $.put("api/cms/user/account/email/active", {
+        token: data.token,
     });
 }
 

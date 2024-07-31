@@ -8,69 +8,30 @@
                     <form ref="loginForm">
                         <!-- 账号 -->
                         <div class="u-email">
-                            <el-input
-                                class="u-text u-email"
-                                v-model="email"
-                                placeholder="邮箱地址"
-                                minlength="3"
-                                maxlength="50"
-                                @change="checkEmail"
-                            >
+                            <el-input class="u-text u-email" v-model="email" placeholder="邮箱地址" minlength="3" maxlength="50" @change="checkEmail">
                                 <template slot="prepend">
-                                    <img
-                                        class="i-mail"
-                                        svg-inline
-                                        src="../../assets/img/mail.svg"
-                                    />
+                                    <img class="i-mail" svg-inline src="../../assets/img/mail.svg" />
                                 </template>
                             </el-input>
                             <div class="u-tip">
-                                <el-alert
-                                    v-show="email_validate == false"
-                                    :title="email_validate_tip"
-                                    type="error"
-                                    show-icon
-                                    :closable="false"
-                                ></el-alert>
+                                <el-alert v-show="email_validate == false" :title="email_validate_tip" type="error" show-icon :closable="false"></el-alert>
                             </div>
                         </div>
 
                         <!-- 密码 -->
                         <div class="u-pass">
-                            <el-input
-                                class="u-text"
-                                placeholder="输入密码"
-                                v-model="pass"
-                                show-password
-                                @input="checkPass"
-                                @keyup.enter.native="submit"
-                            >
+                            <el-input class="u-text" placeholder="输入密码" v-model="pass" show-password @input="checkPass" @keyup.enter.native="submit">
                                 <template slot="prepend">
-                                    <img
-                                        class="i-pass"
-                                        svg-inline
-                                        src="../../assets/img/pass.svg"
-                                    />
+                                    <img class="i-pass" svg-inline src="../../assets/img/pass.svg" />
                                 </template>
                             </el-input>
                             <div class="u-tip">
-                                <el-alert
-                                    v-show="pass_validate == false"
-                                    :title="pass_validate_tip"
-                                    type="error"
-                                    show-icon
-                                    :closable="false"
-                                ></el-alert>
+                                <el-alert v-show="pass_validate == false" :title="pass_validate_tip" type="error" show-icon :closable="false"></el-alert>
                             </div>
                         </div>
 
                         <!-- 提交 -->
-                        <el-button
-                            class="u-submit u-button"
-                            type="primary"
-                            @click="submit"
-                            >登录</el-button
-                        >
+                        <el-button class="u-submit u-button" type="primary" @click="submit">登录</el-button>
                     </form>
 
                     <LoginWith />
@@ -87,36 +48,13 @@
                 </main>
 
                 <main v-if="success == true" class="m-main">
-                    <el-alert
-                        title="登录成功"
-                        type="success"
-                        description="欢迎回来(#^.^#)"
-                        show-icon
-                        :closable="false"
-                    >
-                    </el-alert>
-                    <a
-                        class="u-skip el-button u-button el-button--primary"
-                        :href="redirect"
-                        >{{ redirect_button }}</a
-                    >
+                    <el-alert title="登录成功" type="success" description="欢迎回来(#^.^#)" show-icon :closable="false"> </el-alert>
+                    <a class="u-skip el-button u-button el-button--primary" :href="redirect">{{ redirect_button }}</a>
                 </main>
 
                 <main v-if="success == false" class="m-main">
-                    <el-alert
-                        title="登录失败"
-                        type="error"
-                        :description="errors"
-                        show-icon
-                        :closable="false"
-                    >
-                    </el-alert>
-                    <el-button
-                        class="u-button u-submit"
-                        type="primary"
-                        @click="reset"
-                        >返回</el-button
-                    >
+                    <el-alert title="登录失败" type="error" :description="errors" show-icon :closable="false"> </el-alert>
+                    <el-button class="u-button u-submit" type="primary" @click="reset">返回</el-button>
                 </main>
             </template>
             <template v-else>
@@ -139,14 +77,13 @@ import CardHeader from "@/components/CardHeader.vue";
 import LoginWith from "@/components/LoginWith.vue";
 const { validator } = require("sterilizer");
 const cookie = require("../../utils/cookie");
-import { v4 as uuidv4 } from "uuid";
 import { loginByEmail } from "@/service/email.js";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
-import Msg from '@/components/Msg.vue'
+import Msg from "@/components/Msg.vue";
 export default {
     name: "Login",
-    data: function() {
+    data: function () {
         return {
             success: null,
 
@@ -173,15 +110,15 @@ export default {
         };
     },
     computed: {
-        ready: function() {
+        ready: function () {
             return this.email_validate && this.pass_validate;
         },
-        register_url: function() {
+        register_url: function () {
             return "../register?redirect=" + this.redirect;
         },
     },
     methods: {
-        checkEmail: function() {
+        checkEmail: function () {
             // 如果为空
             if (this.email == "") {
                 this.email_validate = false;
@@ -194,7 +131,7 @@ export default {
             });
             this.email_validate = result;
         },
-        checkPass: function() {
+        checkPass: function () {
             // 如果为空
             if (this.pass == "") {
                 this.pass_validate = false;
@@ -207,7 +144,7 @@ export default {
             });
             this.pass_validate = result;
         },
-        submit: function() {
+        submit: function () {
             if (this.isfrozen()) return;
 
             // FIX:当使用填充器时,无法激活change事件,则提交时验证
@@ -220,13 +157,22 @@ export default {
                 loginByEmail({
                     email: this.email,
                     pass: this.pass,
-                    device_id: this.device_id,
+                    // device_id: this.device_id,
                 })
                     .then((res) => {
                         if (!res.data.code) {
                             this.success = true;
                             let data = res.data.data;
-                            User.update(data)
+                            const _data = {
+                                token: data.token,
+                                uid: data?.user?.ID,
+                                group: data?.user?.user_group || 1,
+                                name: data?.user?.display_name,
+                                status: data?.user?.user_status,
+                                bind_wx: data?.user?.wechat_unionid ? 1 : 0,
+                                avatar: data?.user?.user_avatar || '',
+                            }
+                            User.update(_data)
                                 .then(() => {
                                     // 跳转至来源页
                                     this.skip();
@@ -247,19 +193,19 @@ export default {
                     });
             }
         },
-        reset: function() {
+        reset: function () {
             this.success = null;
             this.email = "";
             this.email_validate = null;
             this.pass = "";
             this.pass_validate = null;
         },
-        frozen: function() {
+        frozen: function () {
             if (this.failcount >= this.faillimit) {
                 cookie.set("loginIsFrozen", "true", 86400);
             }
         },
-        isfrozen: function() {
+        isfrozen: function () {
             if (this.failcount >= this.faillimit) {
                 this.success = false;
                 this.errors = "失败次数过多,请24小时后再试";
@@ -267,7 +213,7 @@ export default {
             }
             return false;
         },
-        checkDirect: function() {
+        checkDirect: function () {
             let search = new URLSearchParams(document.location.search);
             let redirect = search.get("redirect");
             if (redirect) {
@@ -279,39 +225,31 @@ export default {
             }
             console.log(decodeURIComponent(this.redirect));
         },
-        checkDeviceID: function() {
-            if (localStorage) {
-                let device_id = localStorage.getItem("device_id");
-                if (!device_id) {
-                    this.device_id = uuidv4();
-                } else {
-                    this.device_id = device_id;
-                }
-                localStorage.setItem("device_id", this.device_id);
-            }
+        checkDeviceID: function () {
+            User.generateFingerprint();
         },
-        skip: function() {
+        skip: function () {
             if (this.redirect) {
                 setTimeout(() => {
                     location.href = decodeURIComponent(this.redirect);
                 }, 1200);
             }
         },
-        logout: function() {
+        logout: function () {
             User.destroy().then(() => {
                 location.reload();
             });
         },
     },
     filters: {},
-    mounted: function() {
+    mounted: function () {
         this.checkDirect();
         this.checkDeviceID();
     },
     components: {
         CardHeader,
         LoginWith,
-        Msg
+        Msg,
     },
 };
 </script>
