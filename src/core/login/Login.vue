@@ -10,7 +10,8 @@
                         <div class="u-email">
                             <el-input class="u-text u-email" v-model="email" placeholder="邮箱地址" minlength="3" maxlength="50" @change="checkEmail">
                                 <template slot="prepend">
-                                    <img class="i-mail" svg-inline src="../../assets/img/mail.svg" />
+                                    <i class="el-icon-message"></i>
+                                    <!-- <img class="i-mail" svg-inline src="../../assets/img/mail.svg" /> -->
                                 </template>
                             </el-input>
                             <div class="u-tip">
@@ -22,7 +23,8 @@
                         <div class="u-pass">
                             <el-input class="u-text" placeholder="输入密码" v-model="pass" show-password @input="checkPass" @keyup.enter.native="submit">
                                 <template slot="prepend">
-                                    <img class="i-pass" svg-inline src="../../assets/img/pass.svg" />
+                                    <i class="el-icon-lock"></i>
+                                    <!-- <img class="i-pass" svg-inline src="../../assets/img/pass.svg" /> -->
                                 </template>
                             </el-input>
                             <div class="u-tip">

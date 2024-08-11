@@ -41,11 +41,12 @@
                         @input="checkEmail"
                     >
                         <template slot="prepend">
-                            <img
+                            <!-- <img
                                 class="i-mail"
                                 svg-inline
                                 src="../../assets/img/mail.svg"
-                            />
+                            /> -->
+                            <i class="el-icon-message"></i>
                         </template>
                     </el-input>
                     <i
@@ -105,11 +106,12 @@
                         maxlength="6"
                     >
                         <template slot="prepend">
-                            <img
+                            <!-- <img
                                 class="i-code"
                                 svg-inline
                                 src="../../assets/img/key.svg"
-                            />
+                            /> -->
+                            <i class="el-icon-key"></i>
                         </template>
                     </el-input>
                     <i
@@ -144,11 +146,12 @@
                         @change="checkPass"
                     >
                         <template slot="prepend">
-                            <img
+                            <!-- <img
                                 class="i-pass"
                                 svg-inline
                                 src="../../assets/img/pass.svg"
-                            />
+                            /> -->
+                            <i class="el-icon-lock"></i>
                         </template>
                     </el-input>
                     <div class="u-tip">
@@ -172,11 +175,12 @@
                         @input="checkPass"
                     >
                         <template slot="prepend">
-                            <img
+                            <!-- <img
                                 class="i-pass"
                                 svg-inline
                                 src="../../assets/img/pass.svg"
-                            />
+                            /> -->
+                            <i class="el-icon-lock"></i>
                         </template>
                     </el-input>
                     <div class="u-tip">

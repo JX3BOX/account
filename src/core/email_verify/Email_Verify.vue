@@ -78,7 +78,7 @@ export default {
                         this.success = true;
                         // 跳转至首页
                         setTimeout(() => {
-                            location.href = this.homepage;
+                            location.href = "/login";
                         }, 2000);
                     } else {
                         this.success = false;

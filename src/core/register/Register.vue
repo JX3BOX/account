@@ -9,7 +9,8 @@
                     <div class="u-email">
                         <el-input class="u-text u-email" v-model="email" placeholder="邮箱地址" minlength="3" maxlength="50" type="email" @change="checkEmail">
                             <template slot="prepend">
-                                <img class="i-mail" svg-inline src="../../assets/img/mail.svg" />
+                                <i class="el-icon-message"></i>
+                                <!-- <img class="i-mail" svg-inline src="../../assets/img/mail.svg" /> -->
                             </template>
                         </el-input>
                         <i v-show="email_available == true" class="el-icon-success u-ok"></i>
@@ -23,12 +24,22 @@
                     <div class="u-pass">
                         <el-input class="u-text" placeholder="输入密码" v-model="pass" show-password @input="checkPass">
                             <template slot="prepend">
-                                <img class="i-pass" svg-inline src="../../assets/img/pass.svg" />
+                                <i class="el-icon-lock"></i>
+                                <!-- <img class="i-pass" svg-inline src="../../assets/img/pass.svg" /> -->
                             </template>
                         </el-input>
                         <div class="u-tip">
                             <el-alert v-show="pass_validate == false" :title="pass_validate_tip" type="error" show-icon :closable="false"></el-alert>
                         </div>
+                    </div>
+
+                    <!-- 邀请码 -->
+                    <div class="u-invite">
+                        <el-input class="u-text" placeholder="邀请码（非必填）" v-model="invite">
+                            <template slot="prepend">
+                                <i class="el-icon-present"></i>
+                            </template>
+                        </el-input>
                     </div>
 
                     <div class="u-terms">
@@ -83,6 +94,8 @@ export default {
             pass: "",
             pass_validate: null,
             pass_validate_tip: "密码有效长度为6-50个字符",
+
+            invite: "",
 
             success: null,
             failtips: "请求异常,请重试",
@@ -144,6 +157,7 @@ export default {
                 registerByEmail({
                     email: this.email,
                     pass: this.pass,
+                    invite: this.invite,
                 })
                     .then((res) => {
                         if (!res.data.code) {
@@ -161,9 +175,7 @@ export default {
         },
         reset: function () {
             this.success = null;
-            this.email_validate = null;
-            this.email_available = null;
-            this.pass_validate = null;
+            this.agreement = false;
         },
         checkDirect: function () {
             let search = new URLSearchParams(document.location.search);
