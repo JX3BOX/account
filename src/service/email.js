@@ -13,6 +13,7 @@ function registerByEmail(data) {
     return $.post("api/cms/user/account/email/register", {
         email: data.email,
         password: data.pass,
+        invitation: data.invite,
     }, { params: { app: 'jx3box' } });
 }
 

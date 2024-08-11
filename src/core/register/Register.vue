@@ -31,6 +31,15 @@
                         </div>
                     </div>
 
+                    <!-- 邀请码 -->
+                    <div class="u-invite">
+                        <el-input class="u-text" placeholder="邀请码（非必填）" v-model="invite">
+                            <template slot="prepend">
+                                <img class="i-invite" svg-inline src="../../assets/img/invitation.svg" />
+                            </template>
+                        </el-input>
+                    </div>
+
                     <div class="u-terms">
                         <el-checkbox v-model="agreement" class="u-checkbox"
                             >我已阅读并同意<a href="/about/license" target="_blank">《用户协议》</a>、<a href="/about/privacy" target="_blank">《隐私政策》</a>、<a href="/about/treaty" target="_blank"
@@ -83,6 +92,8 @@ export default {
             pass: "",
             pass_validate: null,
             pass_validate_tip: "密码有效长度为6-50个字符",
+
+            invite: "",
 
             success: null,
             failtips: "请求异常,请重试",
@@ -144,6 +155,7 @@ export default {
                 registerByEmail({
                     email: this.email,
                     pass: this.pass,
+                    invite: this.invite,
                 })
                     .then((res) => {
                         if (!res.data.code) {
@@ -161,9 +173,7 @@ export default {
         },
         reset: function () {
             this.success = null;
-            this.email_validate = null;
-            this.email_available = null;
-            this.pass_validate = null;
+            this.agreement = false;
         },
         checkDirect: function () {
             let search = new URLSearchParams(document.location.search);
