@@ -90,7 +90,7 @@
             <!-- 2.填写验证码与新密码 -->
             <main v-if="step == 2" class="m-main">
                 <el-alert
-                    title="请填写邮箱收到的验证码 (10分钟内有效)"
+                    title="请填写邮箱收到的验证码 (60分钟内有效)"
                     type="success"
                     :closable="false"
                 >
