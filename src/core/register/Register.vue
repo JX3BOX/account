@@ -43,18 +43,22 @@
                     </div>
 
                     <div class="u-terms">
-                        <el-checkbox v-model="agreement" class="u-checkbox"
-                            >我已阅读并同意<a href="/about/license" target="_blank">《用户协议》</a>、<a href="/about/privacy" target="_blank">《隐私政策》</a>、<a href="/about/treaty" target="_blank"
-                                >《创作公约》</a
-                            ></el-checkbox
-                        >
+                        <el-checkbox v-model="agreement" class="u-checkbox">
+                          我已阅读并同意
+                          <a href="/about/license" target="_blank">《用户协议》</a>、<a href="/about/privacy" target="_blank">《隐私政策》</a>、<a href="/about/treaty" target="_blank">《创作公约》</a>
+                        </el-checkbox>
                     </div>
 
                     <!-- 提交 -->
-                    <el-button class="u-submit u-button" type="primary" @click="submit" :disabled="!ready">注册</el-button>
+                    <el-button class="u-submit u-button" type="primary" @click="submit" :disabled="!ready">
+                      注册
+                    </el-button>
                 </form>
                 <footer class="m-footer">
-                    <p class="u-login">已有账号? <a :href="login_url">登录 &raquo;</a></p>
+                    <p class="u-login">
+                      已有账号?
+                      <a :href="login_url">登录 &raquo;</a>
+                    </p>
                     <p class="u-resetpwd">
                         <a href="../password_reset">忘记密码?</a>
                     </p>
@@ -78,9 +82,10 @@
 <script>
 const { validator } = require("sterilizer");
 import CardHeader from "@/components/CardHeader.vue";
-import { checkEmail, registerByEmail } from "@/service/email.js";
-import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import {checkEmail, registerByEmail} from "@/service/email.js";
+import {__Root} from "@jx3box/jx3box-common/data/jx3box.json";
 import Msg from "@/components/Msg.vue";
+
 export default {
     name: "Register",
     data: function () {
@@ -147,10 +152,9 @@ export default {
             }
 
             // 校验格式
-            let result = validator(this.pass, {
-                len: [6, 50],
+          this.pass_validate = validator(this.pass, {
+              len: [6, 50],
             });
-            this.pass_validate = result;
         },
         submit: function () {
             if (this.ready) {
@@ -180,11 +184,12 @@ export default {
         checkDirect: function () {
             let search = new URLSearchParams(document.location.search);
             let redirect = search.get("redirect");
-            if (redirect) {
+            this.redirect = redirect ? redirect : this.homepage;
+            /*if (redirect) {
                 this.redirect = redirect;
             } else {
                 this.redirect = this.homepage;
-            }
+            }*/
         },
     },
     filters: {},
