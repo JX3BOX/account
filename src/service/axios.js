@@ -9,7 +9,7 @@ const $ = axios.create({
 });
 
 setTimeout(() => {
-    axios.defaults.headers.common['user-device-fingerprint'] = User.getDeviceFingerprint();
+    $.defaults.headers.common['user-device-fingerprint'] = User.getDeviceFingerprint();
 }, 1500);
 
 import Vue from "vue";
