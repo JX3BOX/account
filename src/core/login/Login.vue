@@ -246,6 +246,8 @@ export default {
     filters: {},
     mounted: function () {
         this.checkDirect();
+    },
+    created: function () {
         this.checkDeviceID();
     },
     components: {

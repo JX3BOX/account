@@ -4,11 +4,13 @@ import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
 
 const $ = axios.create({
     withCredentials : true,
-    headers: {
-        "user-device-fingerprint": User.getDeviceFingerprint(),
-    },
+    headers: {},
     baseURL: process.env.NODE_ENV === "production" ? __cms : "/",
 });
+
+setTimeout(() => {
+    axios.defaults.headers.common['user-device-fingerprint'] = User.getDeviceFingerprint();
+}, 5000);
 
 import Vue from "vue";
 import { Message, Notification } from "element-ui";
