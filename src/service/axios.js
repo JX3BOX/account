@@ -10,7 +10,7 @@ const $ = axios.create({
 
 setTimeout(() => {
     axios.defaults.headers.common['user-device-fingerprint'] = User.getDeviceFingerprint();
-}, 5000);
+}, 1500);
 
 import Vue from "vue";
 import { Message, Notification } from "element-ui";
