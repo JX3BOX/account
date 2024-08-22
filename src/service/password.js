@@ -1,5 +1,7 @@
-import { axios, $ } from "./axios";
+import { axios, $, $cms } from "./axios";
 import { __server, __cms } from "@jx3box/jx3box-common/data/jx3box.json";
+import User from "@jx3box/jx3box-common/js/user";
+
 function sendCode(email) {
     return $.post("api/cms/user/account/email/forgot-password", {
         email: email,
@@ -14,7 +16,11 @@ function checkCode(data) {
 }
 
 function resetPassword(data) {
-    return $.put("api/cms/user/account/email/reset-password", {
+    return $cms({
+        headers: {
+            "user-device-fingerprint": User.getDeviceFingerprint(),
+        },
+    }).put("api/cms/user/account/email/reset-password", {
         email: data.email,
         code: data.code,
         password: data.password,

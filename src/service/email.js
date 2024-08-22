@@ -1,5 +1,6 @@
-import { axios, $ } from "./axios";
+import { axios, $, $cms } from "./axios";
 import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
+import User from "@jx3box/jx3box-common/js/user";
 
 function checkEmail(email) {
     return $.get("api/cms/user/account/email/valid", {
@@ -10,7 +11,11 @@ function checkEmail(email) {
 }
 
 function registerByEmail(data) {
-    return $.post("api/cms/user/account/email/register", {
+    return $cms({
+        headers: {
+            "user-device-fingerprint": User.getDeviceFingerprint(),
+        },
+    }).post("api/cms/user/account/email/register", {
         email: data.email,
         password: data.pass,
         invitation: data.invite,
@@ -18,7 +23,11 @@ function registerByEmail(data) {
 }
 
 function loginByEmail(data) {
-    return $.post("api/cms/user/account/email/login", {
+    return $cms({
+        headers: {
+            "user-device-fingerprint": User.getDeviceFingerprint(),
+        },
+    }).post("api/cms/user/account/email/login", {
         email: data.email,
         password: data.pass,
     }, { params: { app: 'jx3box' } });

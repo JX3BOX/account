@@ -23,11 +23,6 @@ function installInterceptors(target){
             return response;
         },
         function(err) {
-            // if (err.response && err.response.data) {
-            //     broadcast.$message.error(`${err.response.data.msg}`);
-            // } else {
-            //     broadcast.$message.error("网络请求异常");
-            // }
             console.log(err)
             return Promise.reject(err);
         }
@@ -36,4 +31,23 @@ function installInterceptors(target){
 installInterceptors(axios)
 installInterceptors($)
 
-export { $, axios };
+// cms通用请求接口
+function $cms(options) {
+    let domain = (options && options.domain) || __cms;
+    let config = {
+        // 同时发送cookie和basic auth
+        withCredentials: true,
+        baseURL: process.env.NODE_ENV === "production" ? domain : "/",
+        headers: Object.assign({}, options.headers || {}),
+    };
+
+    // 创建实例
+    const ins = axios.create(config);
+
+    // 指定拦截器
+    installInterceptors(ins);
+
+    return ins;
+}
+
+export { $, axios, $cms };
