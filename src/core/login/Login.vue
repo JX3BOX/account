@@ -3,7 +3,7 @@
         <el-card class="box-card">
             <CardHeader />
             <Msg />
-            <template v-if="!isLogin">
+            <template v-if="!isLogin || isAlternate">
                 <main v-if="success == null" class="m-main">
                     <form ref="loginForm">
                         <!-- 账号 -->
@@ -109,6 +109,8 @@ export default {
 
             isLogin: User.isLogin(),
             username: User.getInfo().name,
+
+            isAlternate: false,
         };
     },
     computed: {
@@ -176,6 +178,14 @@ export default {
                             }
                             User.update(_data)
                                 .then(() => {
+
+                                    if (this.isAlternate) {
+                                        localStorage.setItem(`jx3box-alternate-${_data.uid}`, JSON.stringify({
+                                            ..._data,
+                                            created_at: Number(localStorage.getItem("created_at")),
+                                        }));
+                                    }
+
                                     // 跳转至来源页
                                     this.skip();
                                 })
@@ -225,7 +235,11 @@ export default {
                 this.redirect = this.homepage;
                 this.redirect_button = "返回首页";
             }
-            console.log(decodeURIComponent(this.redirect));
+            let alternate = search.get("alternate");
+
+            if (~~alternate) {
+                this.isAlternate = true;
+            }
         },
         checkDeviceID: function () {
             User.generateFingerprint();
