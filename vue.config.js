@@ -54,6 +54,8 @@ module.exports = {
         }
     },
 
+    outputDir: process.env["BUILD_MODE"] == "preview" ? path.resolve(__dirname, pkg.name) : "dist", // 指定构建输出的目录
+
     //❤️ define path for static files ~
     publicPath:
         //FOR Localhost => development
