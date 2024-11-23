@@ -1,16 +1,15 @@
 <template>
-    <div class="m-card" id="app">
+    <div class="m-card m-register" id="app">
         <el-card class="box-card">
             <CardHeader />
             <Msg />
             <main v-if="success == null" class="m-main">
-                <form ref="registerForm">
+                <form ref="registerForm" class="m-form">
                     <!-- 账号 -->
                     <div class="u-email">
                         <el-input class="u-text u-email" v-model="email" placeholder="邮箱地址" minlength="3" maxlength="50" type="email" @change="checkEmail">
                             <template slot="prepend">
                                 <i class="el-icon-message"></i>
-                                <!-- <img class="i-mail" svg-inline src="../../assets/img/mail.svg" /> -->
                             </template>
                         </el-input>
                         <i v-show="email_available == true" class="el-icon-success u-ok"></i>
@@ -20,12 +19,21 @@
                         </div>
                     </div>
 
+                    <!-- 验证码 -->
+                    <div class="u-code">
+                        <el-input class="u-text" placeholder="验证码" v-model="code">
+                            <template slot="prepend">
+                                <i class="el-icon-postcard"></i>
+                            </template>
+                        </el-input>
+                        <el-button class="u-code-btn" size="mini" type="primary" @click="getCode" :disabled="code_disabled">{{ code_text }}</el-button>
+                    </div>
+
                     <!-- 密码 -->
                     <div class="u-pass">
                         <el-input class="u-text" placeholder="输入密码" v-model="pass" show-password @input="checkPass">
                             <template slot="prepend">
                                 <i class="el-icon-lock"></i>
-                                <!-- <img class="i-pass" svg-inline src="../../assets/img/pass.svg" /> -->
                             </template>
                         </el-input>
                         <div class="u-tip">
@@ -44,20 +52,20 @@
 
                     <div class="u-terms">
                         <el-checkbox v-model="agreement" class="u-checkbox">
-                          我已阅读并同意
-                          <a href="/about/license" target="_blank">《用户协议》</a>、<a href="/about/privacy" target="_blank">《隐私政策》</a>、<a href="/about/treaty" target="_blank">《创作公约》</a>
+                            我已阅读并同意
+                            <a href="/about/license" target="_blank">《用户协议》</a>、<a href="/about/privacy" target="_blank">《隐私政策》</a>、<a href="/about/treaty" target="_blank"
+                                >《创作公约》</a
+                            >
                         </el-checkbox>
                     </div>
 
-                    <!-- 提交 -->
-                    <el-button class="u-submit u-button" type="primary" @click="submit" :disabled="!ready">
-                      注册
-                    </el-button>
                 </form>
+                <!-- 提交 -->
+                <el-button class="u-submit u-button" type="primary" @click="submit" :disabled="!ready"> 注册 </el-button>
                 <footer class="m-footer">
                     <p class="u-login">
-                      已有账号?
-                      <a :href="login_url">登录 &raquo;</a>
+                        已有账号?
+                        <a :href="login_url">登录 &raquo;</a>
                     </p>
                     <p class="u-resetpwd">
                         <a href="../password_reset">忘记密码?</a>
@@ -66,7 +74,7 @@
             </main>
 
             <main v-if="success == true" class="m-main">
-                <el-alert title="注册成功" type="success" description="一封邮箱验证的邮件已发送至您的邮箱,请注意查收" show-icon :closable="false"> </el-alert>
+                <el-alert title="注册成功" type="success" description="恭喜，您现在已经是「魔盒」的一员啦！" show-icon :closable="false"> </el-alert>
                 <a class="u-skip el-button u-button el-button--primary" :href="login_url">立即登录</a>
             </main>
 
@@ -82,8 +90,8 @@
 <script>
 const { validator } = require("sterilizer");
 import CardHeader from "@/components/CardHeader.vue";
-import {checkEmail, registerByEmail} from "@/service/email.js";
-import {__Root} from "@jx3box/jx3box-common/data/jx3box.json";
+import { checkEmail, registerByEmail, verifyEmail } from "@/service/email.js";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import Msg from "@/components/Msg.vue";
 
 export default {
@@ -109,6 +117,10 @@ export default {
             redirect: "",
 
             agreement: false,
+
+            code: "",
+            code_text: "发送验证码",
+            interval: 0,
         };
     },
     computed: {
@@ -117,6 +129,9 @@ export default {
         },
         login_url: function () {
             return "../login?redirect=" + this.redirect;
+        },
+        code_disabled: function () {
+            return !this.email || !this.email_available || this.interval > 0;
         },
     },
     methods: {
@@ -152,16 +167,17 @@ export default {
             }
 
             // 校验格式
-          this.pass_validate = validator(this.pass, {
-              len: [6, 50],
+            this.pass_validate = validator(this.pass, {
+                len: [6, 50],
             });
         },
         submit: function () {
             if (this.ready) {
-                registerByEmail({
+                verifyEmail({
                     email: this.email,
-                    pass: this.pass,
-                    invite: this.invite,
+                    password: this.pass,
+                    invitation: this.invite,
+                    code: this.code,
                 })
                     .then((res) => {
                         if (!res.data.code) {
@@ -190,6 +206,25 @@ export default {
             } else {
                 this.redirect = this.homepage;
             }*/
+        },
+        getCode: function () {
+            registerByEmail({ email: this.email }).then(res => {
+                this.$message({
+                    message: "验证码已发送至您的邮箱",
+                    type: "success",
+                });
+                // 倒计时
+                this.interval = 60;
+                this.code_text = this.interval + "s";
+                let timer = setInterval(() => {
+                    this.interval--;
+                    this.code_text = this.interval + "s";
+                    if (this.interval <= 0) {
+                        clearInterval(timer);
+                        this.code_text = "发送验证码";
+                    }
+                }, 1000);
+            })
         },
     },
     filters: {},

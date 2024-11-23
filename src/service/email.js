@@ -16,9 +16,7 @@ function registerByEmail(data) {
             "user-device-fingerprint": User.getDeviceFingerprint(),
         },
     }).post("api/cms/user/account/email/register", {
-        email: data.email,
-        password: data.pass,
-        invitation: data.invite,
+        email: data.email
     }, { params: { app: 'jx3box' } });
 }
 
@@ -35,9 +33,7 @@ function loginByEmail(data) {
 }
 
 function verifyEmail(data) {
-    return $.put("api/cms/user/account/email/active", {
-        token: data.token,
-    });
+    return $.put("api/cms/user/account/email/active", data);
 }
 
 export { checkEmail, registerByEmail, loginByEmail, verifyEmail };
