@@ -28,6 +28,6 @@ jobs:
                   host: ${{ secrets.HOST_NANJING2 }}
                   username: ${{ secrets.DEPLOY_USER }}
                   key: ${{ secrets.DEPLOY_KEY }}
-                  source: dist/*
-                  target: /www/wwwroot/jx3box/test/account
+                  source: account/*
+                  target: /www/wwwroot/jx3box/test
 
