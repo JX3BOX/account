@@ -5,7 +5,7 @@ import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
 const $ = axios.create({
     withCredentials : true,
     headers: {},
-    baseURL: process.env.NODE_ENV === "production" ? __cms : "/",
+    baseURL: process.env.VUE_APP_CMS_API,
 });
 
 setTimeout(() => {
