@@ -36,7 +36,7 @@
                         <el-button class="u-submit u-button" type="primary" @click="submit">登录</el-button>
                     </form>
 
-                    <LoginWith />
+                    <Union mode="login" :includes="['qq', 'wechat', 'weibo']" />
 
                     <footer class="m-footer">
                         <p class="u-login">
@@ -76,7 +76,7 @@
 
 <script>
 import CardHeader from "@/components/CardHeader.vue";
-import LoginWith from "@/components/LoginWith.vue";
+import Union from "@/components/Union.vue";
 const { validator } = require("sterilizer");
 const cookie = require("../../utils/cookie");
 import { loginByEmail } from "@/service/email.js";
@@ -266,7 +266,7 @@ export default {
     },
     components: {
         CardHeader,
-        LoginWith,
+        Union,
         Msg,
     },
 };

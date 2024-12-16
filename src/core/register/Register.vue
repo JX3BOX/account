@@ -62,6 +62,9 @@
                 </form>
                 <!-- 提交 -->
                 <el-button class="u-submit u-button" type="primary" @click="submit" :disabled="!ready"> 注册 </el-button>
+
+                <Union mode="register" :includes="['qq','wechat','weibo']" />
+
                 <footer class="m-footer">
                     <p class="u-login">
                         已有账号?
@@ -93,6 +96,7 @@ import CardHeader from "@/components/CardHeader.vue";
 import { checkEmail, registerByEmail, verifyEmail } from "@/service/email.js";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import Msg from "@/components/Msg.vue";
+import Union from "@/components/Union.vue";
 
 export default {
     name: "Register",
@@ -234,6 +238,7 @@ export default {
     components: {
         CardHeader,
         Msg,
+        Union,
     },
 };
 </script>

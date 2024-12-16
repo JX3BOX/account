@@ -10,20 +10,20 @@
                     <span class="u-oauth-name">Github</span>
                 </a></el-col
             > -->
-            <el-col :span="8"
-                ><a class="u-item" :href="qq">
+            <el-col :span="8" v-if="includes.includes('qq')"
+                ><a class="u-item" :href="getUnionLink('api/cms/user/union/qqsite/')">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/qq.svg" /></i>
                     <span class="u-oauth-name">QQ</span>
                 </a></el-col
             >
-            <el-col :span="8"
-                ><a class="u-item" :href="wechat">
+            <el-col :span="8" v-if="includes.includes('wechat')"
+                ><a class="u-item" :href="getUnionLink('api/cms/user/union/wesite/')">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/wechat.svg" /></i>
                     <span class="u-oauth-name">微信</span>
                 </a></el-col
             >
-            <el-col :span="8"
-                ><a class="u-item" :href="weibo">
+            <el-col :span="8" v-if="includes.includes('weibo')"
+                ><a class="u-item" :href="getUnionLink('api/cms/user/union/weibosite/')">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/weibo.svg" /></i>
                     <span class="u-oauth-name">微博</span>
                 </a></el-col
@@ -34,11 +34,20 @@
 
 <script>
 import connect from "@jx3box/jx3box-common/js/connect.js";
-import User from "@jx3box/jx3box-common/js/user";
-const client = location.host.includes('origin') ? 'origin' : 'std'
+const client = location.href.includes('origin') ? 'origin' : 'std'
+import {__cms} from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "LoginWith",
-    props: [],
+    props: {
+        mode: {
+            type: String,
+            default: "login",
+        },
+        includes: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data: function () {
         return {
             github: this.buildState(connect.github),
@@ -48,10 +57,18 @@ export default {
         };
     },
     computed: {
+        unionLinkSuffix() {
+            return "?client=" + client;
+        },
     },
     methods: {
         buildState : function (val){
             return val.replace('state=login',`state=login_${client}`)
+        },
+        getUnionLink(path) {
+            const cms = __cms;
+            // const cms = 'http://localhost:7100/'
+            return cms + path + this.mode + this.unionLinkSuffix;
         }
     },
     mounted: function () {},
