@@ -31,11 +31,18 @@ export default {
     methods: {
         init() {
             const params = new URLSearchParams(location.search);
-            const userdata = params.get("userdata");
-            if (userdata) {
-                const userdata = JSON.parse(atob(userdata));
-                User.update(userdata).then(() => {
-                    this.success = true;
+            const _userdata = params.get("userdata");
+            if (_userdata) {
+                const data = JSON.parse(decodeURIComponent(escape(atob(_userdata))));
+
+                const _data = {
+                    token: data.token,
+                    uid: data.ID,
+                    name: data?.display_name,
+                    avatar: data?.user_avatar || '',
+                }
+
+                User.update(_data).then(() => {
                     this.skip();
                 });
             }

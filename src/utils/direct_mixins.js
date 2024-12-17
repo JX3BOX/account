@@ -8,7 +8,7 @@ export const directMixins = {
     },
     mounted() {
         // 其它页面带redirect跳转过来时
-        let search = new URLSearchParams(document.location.search);
+        let search = new URLSearchParams(location.search);
             let redirect = search.get("redirect");
         if (redirect) {
             sessionStorage.setItem("redirect", redirect);
@@ -26,12 +26,6 @@ export const directMixins = {
             } else {
                 this.redirect = this.homepage;
                 this.redirect_button = "返回首页";
-            }
-
-            let alternate = search.get("alternate");
-
-            if (~~alternate) {
-                this.isAlternate = true;
             }
         },
         skip: function () {
