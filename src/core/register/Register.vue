@@ -63,7 +63,7 @@
                 <!-- 提交 -->
                 <el-button class="u-submit u-button" type="primary" @click="submit" :disabled="!ready"> 注册 </el-button>
 
-                <Union mode="register" :includes="['qq','wechat','weibo']" />
+                <Union mode="register" :includes="['wechat']" />
 
                 <footer class="m-footer">
                     <p class="u-login">

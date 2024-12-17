@@ -37,12 +37,12 @@ module.exports = {
             template : 'public/app.html',
             filename:'login_callback/index.html',
         },
-        // wechat : {
-        //     title : '微信扫一扫 - JX3BOX',
-        //     entry:'src/core/wechat/wechat.js',
-        //     template : 'public/app.html',
-        //     filename:'wechat/index.html',
-        // },
+        register_callback : {
+            title : '注册成功 - JX3BOX',
+            entry:'src/core/register_callback/register_callback.js',
+            template : 'public/app.html',
+            filename:'register_callback/index.html',
+        },
     },
 
     //❤️ Porxy ~

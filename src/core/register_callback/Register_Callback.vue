@@ -4,8 +4,8 @@
             <CardHeader />
 
             <main class="m-main">
-                <el-alert title="登录成功" type="success" description="欢迎回来(#^.^#)" show-icon :closable="false"> </el-alert>
-                <a class="u-skip el-button u-button el-button--primary" :href="redirect">{{ redirect_button }}</a>
+                <el-alert title="注册成功" type="success" description="恭喜，您现在已经是「魔盒」的一员啦！" show-icon :closable="false"> </el-alert>
+                <Union mode="login" :includes="[from]" />
             </main>
         </el-card>
         <Bottom />
@@ -14,38 +14,27 @@
 
 <script>
 import CardHeader from "@/components/CardHeader.vue";
-import User from "@jx3box/jx3box-common/js/user";
 import { __Root, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 const client = location.host.includes("origin") ? "origin" : "std";
-import { directMixins } from "@/utils/direct_mixins";
+import Union from "../../components/Union.vue";
 
 export default {
     name: "Login_Callback",
-    mixins: [directMixins],
     data: function () {
         return {
             success: null,
             redirect: client =='origin' ? __OriginRoot : __Root,
         };
     },
-    methods: {
-        init() {
+    computed: {
+        from() {
             const params = new URLSearchParams(location.search);
-            const userdata = params.get("userdata");
-            if (userdata) {
-                const userdata = JSON.parse(atob(userdata));
-                User.update(userdata).then(() => {
-                    this.success = true;
-                    this.skip();
-                });
-            }
+            return params.get("from");
         },
-    },
-    mounted: function () {
-        this.init();
     },
     components: {
         CardHeader,
+        Union,
     },
 };
 </script>

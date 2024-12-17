@@ -10,19 +10,19 @@
                     <span class="u-oauth-name">Github</span>
                 </a></el-col
             > -->
-            <el-col :span="8" v-if="includes.includes('qq')"
+            <el-col :span="span" v-if="includes.includes('qq')"
                 ><a class="u-item" :href="qq">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/qq.svg" /></i>
                     <span class="u-oauth-name">QQ</span>
                 </a></el-col
             >
-            <el-col :span="8" v-if="includes.includes('wechat')"
+            <el-col :span="span" v-if="includes.includes('wechat')"
                 ><a class="u-item" :href="getUnionLink('api/cms/user/union/wesite/')">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/wechat.svg" /></i>
                     <span class="u-oauth-name">微信</span>
                 </a></el-col
             >
-            <el-col :span="8" v-if="includes.includes('weibo')"
+            <el-col :span="span" v-if="includes.includes('weibo')"
                 ><a class="u-item" :href="weibo">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/weibo.svg" /></i>
                     <span class="u-oauth-name">微博</span>
@@ -59,6 +59,9 @@ export default {
     computed: {
         unionLinkSuffix() {
             return "?client=" + client;
+        },
+        span() {
+            return 24 / this.includes.length;
         },
     },
     methods: {
