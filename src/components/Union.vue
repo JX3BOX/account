@@ -11,7 +11,7 @@
                 </a></el-col
             > -->
             <el-col :span="8" v-if="includes.includes('qq')"
-                ><a class="u-item" :href="getUnionLink('api/cms/user/union/qqsite/')">
+                ><a class="u-item" :href="qq">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/qq.svg" /></i>
                     <span class="u-oauth-name">QQ</span>
                 </a></el-col
@@ -23,7 +23,7 @@
                 </a></el-col
             >
             <el-col :span="8" v-if="includes.includes('weibo')"
-                ><a class="u-item" :href="getUnionLink('api/cms/user/union/weibosite/')">
+                ><a class="u-item" :href="weibo">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/weibo.svg" /></i>
                     <span class="u-oauth-name">微博</span>
                 </a></el-col
