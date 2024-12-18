@@ -37,6 +37,12 @@ module.exports = {
             template : 'public/app.html',
             filename:'login_callback/index.html',
         },
+        login_callback_wesite : {
+            title : '登录成功 - JX3BOX',
+            entry:'src/core/login_callback_wesite/login_callback.js',
+            template : 'public/app.html',
+            filename:'login_callback_wesite/index.html',
+        },
         register_callback : {
             title : '注册成功 - JX3BOX',
             entry:'src/core/register_callback/register_callback.js',
