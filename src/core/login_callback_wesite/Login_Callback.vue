@@ -33,7 +33,8 @@ export default {
             const params = new URLSearchParams(location.search);
             const _userdata = params.get("userdata");
             if (_userdata) {
-                const data = JSON.parse(decodeURIComponent(escape(atob(_userdata))));
+                // const data = JSON.parse(decodeURIComponent(escape(atob(_userdata))));
+                const data = JSON.parse(atob(_userdata));
 
                 const _data = {
                     token: data.token,
