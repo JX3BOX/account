@@ -11,7 +11,7 @@
                 </a></el-col
             > -->
             <el-col :span="span" v-if="includes.includes('qq')"
-                ><a class="u-item" :href="qq">
+                ><a class="u-item" :href="getUnionLink('api/cms/user/union/qqsite/')">
                     <i class="u-oauth-logo"><img svg-inline src="../assets/img/qq.svg" /></i>
                     <span class="u-oauth-name">QQ</span>
                 </a></el-col
