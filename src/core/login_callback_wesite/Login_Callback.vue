@@ -40,6 +40,8 @@ export default {
                     uid: data.ID,
                     name: data?.display_name,
                     avatar: data?.user_avatar || '',
+                    group: data?.user_group || 8,
+                    status: data?.status || 0
                 }
 
                 User.update(_data).then(() => {
