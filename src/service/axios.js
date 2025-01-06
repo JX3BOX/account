@@ -33,11 +33,12 @@ installInterceptors($)
 
 // cms通用请求接口
 function $cms(options) {
-    let domain = (options && options.domain) || process.env.VUE_APP_CMS_API;
+    let domain = (options && options.domain) || __cms;
     let config = {
         // 同时发送cookie和basic auth
         withCredentials: true,
-        baseURL: process.env.NODE_ENV === "production" ? domain : "/",
+        baseURL: domain,
+        // baseURL: process.env.NODE_ENV === "production" ? domain : "/",
         headers: Object.assign({}, options.headers || {}),
     };
 
