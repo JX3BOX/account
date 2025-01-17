@@ -45,6 +45,15 @@ export default {
                 }
 
                 User.update(_data).then(() => {
+
+                    if (this.isAlternate) {
+                        localStorage.setItem(`jx3box-alternate-${_data.uid}`, JSON.stringify({
+                            ..._data,
+                            created_at: Number(localStorage.getItem("created_at")),
+                        }));
+                    }
+
+                    sessionStorage.removeItem("alternate");
                     this.skip();
                 });
             }

@@ -239,6 +239,8 @@ export default {
 
             if (~~alternate) {
                 this.isAlternate = true;
+
+                sessionStorage.setItem("alternate", 1);
             }
         },
         checkDeviceID: function () {
