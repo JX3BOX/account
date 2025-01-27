@@ -4,6 +4,7 @@ export const directMixins = {
             redirect: "",
             redirect_button: "",
             homepage: "/",
+            isAlternate: false,
         };
     },
     mounted() {
@@ -27,6 +28,8 @@ export const directMixins = {
                 this.redirect = this.homepage;
                 this.redirect_button = "返回首页";
             }
+
+            this.isAlternate = sessionStorage.getItem("alternate") == 1;
         },
         skip: function () {
             if (this.redirect) {
