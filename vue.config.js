@@ -52,13 +52,13 @@ module.exports = {
     },
 
     //❤️ Porxy ~
-    devServer: {
-        proxy: {
-            "/api/cms": {
-                target: process.env["DEV_SERVER"] == "true" ? "http://localhost:7100" : "https://cms.jx3box.com",
-            },
-        }
-    },
+    // devServer: {
+    //     proxy: {
+    //         "/api/cms": {
+    //             target: process.env["DEV_SERVER"] == "true" ? "http://localhost:7100" : "https://cms.jx3box.com",
+    //         },
+    //     }
+    // },
 
     outputDir: process.env["BUILD_MODE"] == "preview" ? path.resolve(__dirname, pkg.name) : "dist", // 指定构建输出的目录
 

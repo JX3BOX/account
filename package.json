@@ -2,16 +2,17 @@
   "name": "account",
   "private": true,
   "scripts": {
-    "dev": "cross-env DEV_SERVER=true vue-cli-service serve",
+    "dev": "cross-env DEV_SERVER=true vue-cli-service serve --mode development",
     "serve": "vue-cli-service serve",
+    "debug": "cross-env DEV_SERVER=true vue-cli-service serve --mode staging",
     "build": "vue-cli-service build",
-    "preview": "cross-env BUILD_MODE=preview vue-cli-service build --mode development",
+    "build-dev": "cross-env BUILD_MODE=preview vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
     "inspect": "vue inspect > output.js",
     "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common@latest"
   },
   "dependencies": {
-    "@jx3box/jx3box-common": "^8.3.3",
+    "@jx3box/jx3box-common": "^8.5.7",
     "@jx3box/jx3box-common-ui": "^8.9.11",
     "axios": "^0.19.2",
     "core-js": "^3.4.3",
