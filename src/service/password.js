@@ -1,6 +1,7 @@
 import { axios, $, $cms } from "./axios";
 import { __server, __cms } from "@jx3box/jx3box-common/data/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
+import { encryptPassword } from "@/utils/pwd_encrypt";
 
 function sendCode(email) {
     return $.post("api/cms/user/account/email/forgot-password", {
@@ -11,7 +12,7 @@ function sendCode(email) {
 function checkCode(data) {
     return axios.post(__server + "account/password/reset/check", {
         email: data.email,
-        code : data.code
+        code: data.code
     });
 }
 
@@ -23,7 +24,9 @@ function resetPassword(data) {
     }).put("api/cms/user/account/email/reset-password", {
         email: data.email,
         code: data.code,
-        password: data.password,
+        password: encryptPassword(data.password),
+    },{
+        params: { encrypt : 1 }
     });
 }
 

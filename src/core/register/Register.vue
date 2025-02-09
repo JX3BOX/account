@@ -213,6 +213,21 @@ export default {
         },
         getCode: function () {
             registerByEmail({ email: this.email }).then(res => {
+
+                if(res.data.code){
+                    let msg = '';
+                    if(res.data.code == 99999){
+                        msg = '抱歉,暂不支持该邮件服务商,请更换邮箱服务商';
+                    }else{
+                        msg = res.data.msg;
+                    }
+                    this.$message({
+                        message: msg,
+                        type: "error",
+                    });
+                    return;
+                }
+
                 this.$message({
                     message: "验证码已发送至您的邮箱",
                     type: "success",
